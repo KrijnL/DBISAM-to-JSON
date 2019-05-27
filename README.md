@@ -39,3 +39,8 @@ python convert.py <filename> -c outfile.csv
 This will export to a JSON file:
 ```
 python convert.py <filename> -o outfile.json
+
+## Dependencies
+
+This script is written in python 2.7, it will not work in python 3.x.
+Porting to python 3 issomething I might do in the future, but for now it works...
