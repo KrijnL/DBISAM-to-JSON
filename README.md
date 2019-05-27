@@ -49,5 +49,4 @@ python convert.py <filename> -s
 
 ## Dependencies
 
-This script is written in python 2.7, it will not work in python 3.x.
-Porting to python 3 issomething I might do in the future, but for now it works...
+This script is originally written in python 2.7. A version that runs in python3 van be found in the python3 folder.
