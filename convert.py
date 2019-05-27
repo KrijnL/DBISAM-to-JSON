@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Standard Library imports
 import json
 import csv
@@ -52,7 +53,7 @@ def main():
         length_arr = bytearray(length)[::-1]
         row_length = int(bytes(length_arr).encode('hex'), 16)
 
-        # Make list of offsets for cols (every row is 0x50 bytes long )
+        # Make list of offsets for cols
         offsets = []
         while(last_offset < num_bytes):
             offsets.append(last_offset)
