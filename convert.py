@@ -1,7 +1,5 @@
 # Standard Library imports
-import sys
 import json
-import binascii
 import csv
 import argparse
 from datetime import date
@@ -35,6 +33,7 @@ def main():
     if args.out:
         outfile = args.out
 
+    # READ .DAT file
     FILENAME = args.filename
 
     dataset = []
@@ -46,9 +45,8 @@ def main():
 
         # GET column names
         cols, last_offset = get_col_names(file)
-        # print(cols, last_offset)
 
-        # GET byte offsets for each row (length is little endian at 0x2D & 0x2E)
+        # GET byte offsets for each row (row length is located little endian at 0x2D & 0x2E)
         file.seek(45)
         length = file.read(2)
         length_arr = bytearray(length)[::-1]
@@ -76,8 +74,6 @@ def main():
     arguments['file'] = outfile
     export(dataset, keys, arguments)
 
-    # print(json.dumps(dataset))
-
 
 def export(dataset, keys, args):
     if args['form'] == 'json':
@@ -104,8 +100,6 @@ def export(dataset, keys, args):
                 return
     else:
         print(output)
-
-
 
 if __name__ == '__main__':
     main()
