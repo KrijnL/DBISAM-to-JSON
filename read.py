@@ -7,91 +7,91 @@ import csv
 from datetime import date, timedelta
 
 # Local imports
+from columns import get_col_names
+
+# def get_col_type(file, offset):
+#     file.seek(offset + 164)
+#     byte = file.read(1)
+#     col_type = ''
+#     if byte == '\x02':
+#         col_type = 'date'
+#         col_length = 5
+#     if byte == '\x06':
+#         col_type = 'int'
+#         col_length = 5
+#     if byte == '\x07':
+#         col_type = 'float'
+#         col_length = 9
+#     if byte == '\x01':
+#         col_type = 'string'
+#         file.seek(offset + 166)
+#         byte = file.read(1)
+#         col_length = int(binascii.hexlify(byte), 16)+2
+
+#     return col_type, col_length
 
 
-def get_col_type(file, offset):
-    file.seek(offset + 164)
-    byte = file.read(1)
-    col_type = ''
-    if byte == '\x02':
-        col_type = 'date'
-        col_length = 5
-    if byte == '\x06':
-        col_type = 'int'
-        col_length = 5
-    if byte == '\x07':
-        col_type = 'float'
-        col_length = 9
-    if byte == '\x01':
-        col_type = 'string'
-        file.seek(offset + 166)
-        byte = file.read(1)
-        col_length = int(binascii.hexlify(byte), 16)+2
+# def get_col(file, offset, next_byte):
+#     col = {}
 
-    return col_type, col_length
+#     num_cols = 0
+#     file.seek(offset)
+#     byte = file.read(1)
+#     if byte == next_byte:
+#         # print(next_byte)
+#         num_cols += 1
+#     else:
+#         return '__DONE__'
+#         # print(binascii.hexlify(byte))
+#     next = offset+2
 
+#     buf = ''
+#     # file.seek(next)
+#     # byte = file.read(1)
 
-def get_col(file, offset, next_byte):
-    col = {}
+#     # Get col type
+#     col['type'], col['length'] = get_col_type(file, offset)
+#     # print(col['type'], col['length'])
 
-    num_cols = 0
-    file.seek(offset)
-    byte = file.read(1)
-    if byte == next_byte:
-        # print(next_byte)
-        num_cols += 1
-    else:
-        return '__DONE__'
-        # print(binascii.hexlify(byte))
-    next = offset+2
+#     # Get col name
+#     while(True):
+#         if(byte == b'\x00'):
+#             break
+#         # print('read: ' + binascii.hexlify(file.read(1)))
+#         file.seek(next)
+#         byte = file.read(1)
+#         buf += byte.decode()
+#         # print(byte)
+#         next += 1
+#     col['name'] = buf[1:-1]
 
-    buf = ''
-    # file.seek(next)
-    # byte = file.read(1)
-
-    # Get col type
-    col['type'], col['length'] = get_col_type(file, offset)
-    # print(col['type'], col['length'])
-
-    # Get col name
-    while(True):
-        if(byte == b'\x00'):
-            break
-        # print('read: ' + binascii.hexlify(file.read(1)))
-        file.seek(next)
-        byte = file.read(1)
-        buf += byte.decode()
-        # print(byte)
-        next += 1
-    col['name'] = buf[1:-1]
-
-    return col
+#     return col
 
 
-def get_col_names(file):
-    # SET values to find first col
-    done = False
-    offset = 512  # first col has offset 0x200
-    nxt = 1
+# def get_col_names(file):
+#     # SET values to find first col
+#     done = False
+#     offset = 512  # first col has offset 0x200
+#     nxt = 1
 
-    cols = []
+#     cols = []
 
-    # GET cols
-    while(not done):
-        next_byte = chr(nxt)
-        col = get_col(file, offset, next_byte)
+#     # GET cols
+#     while(not done):
+#         next_byte = chr(nxt)
+#         col = get_col(file, offset, next_byte)
 
-        if col != '__DONE__':
-            cols.append(col)
-            nxt += 1
-        else:
-            done = True
-            last_offset = offset
+#         if col != '__DONE__':
+#             cols.append(col)
+#             nxt += 1
+#         else:
+#             done = True
+#             last_offset = offset
 
-        offset += 768  # next col has offset 0x300
+#         offset += 768  # next col has offset 0x300
 
-    # print(cols)
-    return cols, last_offset
+#     # print(cols)
+#     return cols, last_offset
 
 
 def get_row_data(file, cols, offset):
