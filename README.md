@@ -11,7 +11,7 @@ Currently it can read the following fields:
 ## Usage
 
 ```
-convert.py [-h] [-j] [-c] [-o OUT] filename
+convert.py [-h] [-j] [-c CSV] [-o OUT] filename
 
 converts a DBISAM .dat file to JSON format
 
@@ -21,7 +21,7 @@ positional arguments:
 optional arguments:
   -h, --help         show this help message and exit
   -j, --json         print output in JSON format
-  -c, --csv          print output in CSV format
+  -c CSV, --csv CSV  create a csv file containing the output
   -o OUT, --out OUT  instead of printing to stdout, save data to file.
 
 ```
