@@ -19,12 +19,10 @@ def get_row_data(file, cols, offset):
                     buf += b.decode('utf-8', 'ignore')
             val = buf
         if col['type'] == 'float':
-            # print(binascii.hexlify(byts[1:]))
             val = struct.unpack('d', byts[1:])[0]
         if col['type'] == 'int':
             val = struct.unpack('i', byts[1:])[0]
         if col['type'] == 'date':
-            # print(binascii.hexlify(byts[1:]))
             num = struct.unpack('i', byts[1:])[0]
             if not num == 0:
                 d0 = date(1, 1, 1)
