@@ -26,4 +26,7 @@ optional arguments:
 
 ```
 
-Will print the file's records in JSON format
+The following will print the file's records in JSON format:
+```
+
+```
