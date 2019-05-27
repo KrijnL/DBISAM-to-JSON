@@ -2,7 +2,7 @@ import struct
 from datetime import date, timedelta
 
 
-def get_row_data(file, cols, offset):
+def get_row_data(file, cols, offset, stream):
 
     # First data appears after 26 bytes in the row (first bytes are a hash)
     offset = offset + 25
@@ -33,4 +33,6 @@ def get_row_data(file, cols, offset):
                 val = None
 
         data[col['name']] = val
+    if stream:
+        print(data)
     return data

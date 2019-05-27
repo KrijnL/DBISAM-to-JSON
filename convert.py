@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # Standard Library imports
 import json
 import csv
@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument('-j', '--json', help='print output in JSON format', action='store_true')
     parser.add_argument('-c', '--csv', help='create a csv file containing the output')
     parser.add_argument('-o', '--out', help='instead of printing to stdout, save data to file.')
+    parser.add_argument('-s', '--stream', help='print data row by row while it\'s being read', action='store_true')
     return parser.parse_args()
 
 
@@ -61,19 +62,21 @@ def main():
 
         # GET data from rows
         for i in range(0, len(offsets)-1):  # len(offsets)-1
-            dataset.append(get_row_data(file, cols, offsets[i]))
+            dataset.append(get_row_data(file, cols, offsets[i], args.stream))
 
     # EXPORT
-
-    # Make a list of keys for csv export
-    keys = []
-    for col in cols:
-        keys.append(col['name'])
-    # Make a list of arguments for exporting
-    arguments = {}
-    arguments['form'] = form
-    arguments['file'] = outfile
-    export(dataset, keys, arguments)
+    if args.stream:
+        return
+    else:
+        # Make a list of keys for csv export
+        keys = []
+        for col in cols:
+            keys.append(col['name'])
+        # Make a list of arguments for exporting
+        arguments = {}
+        arguments['form'] = form
+        arguments['file'] = outfile
+        export(dataset, keys, arguments)
 
 
 def export(dataset, keys, args):

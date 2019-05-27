@@ -11,7 +11,7 @@ Currently it can read the following fields:
 ## Usage
 
 ```
-convert.py [-h] [-j] [-c CSV] [-o OUT] filename
+usage: convert.py [-h] [-j] [-c CSV] [-o OUT] [-s] filename
 
 converts a DBISAM .dat file to JSON format
 
@@ -23,6 +23,7 @@ optional arguments:
   -j, --json         print output in JSON format
   -c CSV, --csv CSV  create a csv file containing the output
   -o OUT, --out OUT  instead of printing to stdout, save data to file.
+  -s, --stream       print data row by row while it's being read
 
 ```
 
@@ -39,6 +40,11 @@ python convert.py <filename> -c outfile.csv
 This will export to a JSON file:
 ```
 python convert.py <filename> -o outfile.json
+```
+
+Stream the data to stdout (print row by row)
+```
+python convert.py <filename> -s
 ```
 
 ## Dependencies
