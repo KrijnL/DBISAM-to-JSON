@@ -2,3 +2,4 @@ files/
 *.csv
 *.dat
 *.json
+*.pyc

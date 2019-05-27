@@ -11,7 +11,18 @@ Currently it can read the following fields:
 ## Usage
 
 ```
-python read.py <.dat file>
+read.py [-h] [-j] [-c] [-o OUT] filename
+
+converts a DBISAM .dat file to JSON format
+
+positional arguments:
+  filename           the .dat file you want to extract data from
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -j, --json         print output in JSON format
+  -c, --csv          print output in CSV format
+  -o OUT, --out OUT  instead of printing to stdout, save data to file.
 
 ```
 
