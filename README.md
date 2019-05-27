@@ -11,7 +11,7 @@ Currently it can read the following fields:
 ## Usage
 
 ```
-read.py [-h] [-j] [-c] [-o OUT] filename
+convert.py [-h] [-j] [-c] [-o OUT] filename
 
 converts a DBISAM .dat file to JSON format
 
@@ -26,7 +26,16 @@ optional arguments:
 
 ```
 
-The following will print the file's records in JSON format:
+The following will print the file's records to stdout in JSON format:
+```
+python convert.py <filename>
 ```
 
+The following exports to a csv file:
 ```
+python convert.py <filename> -c outfile.csv
+```
+
+This will export to a JSON file:
+```
+python convert.py <filename> -o outfile.json

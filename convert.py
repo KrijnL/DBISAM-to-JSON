@@ -15,7 +15,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='converts a DBISAM .dat file to JSON format')
     parser.add_argument('filename', help='the .dat file you want to extract data from')
     parser.add_argument('-j', '--json', help='print output in JSON format', action='store_true')
-    parser.add_argument('-c', '--csv', help='print output in CSV format', action='store_true')
+    parser.add_argument('-c', '--csv', help='create a csv file containing the output')
     parser.add_argument('-o', '--out', help='instead of printing to stdout, save data to file.')
     return parser.parse_args()
 
@@ -29,11 +29,9 @@ def main():
     if(args.json and args.csv):
         print('cannot use -j and -c options together')
         exit(1)
-    elif args.csv and not args.out:
-        print('-c option must always be used together with -o')
-        exit(1)
     elif args.csv:
         form = 'csv'
+        outfile = args.csv
     if args.out:
         outfile = args.out
 
