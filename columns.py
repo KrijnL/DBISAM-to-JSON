@@ -3,24 +3,30 @@ import binascii
 from col_types import types
 
 
+# Gets field type belonging to column, and also returns the length in bytes of the column
 def get_col_type(file, offset):
+    # field type is located 164 bytes after first byte describing column
     file.seek(offset + 164)
     byte = file.read(1)
     try:
         col_type = types[byte]['col_type']
-        col_length = types[byte]['col_length']
+        # add 1 to col length to compensate for starting \x01 byte
+        col_length = types[byte]['col_length']+1
     except:
         print('Unknown field type, can\'t extract data (yet)')
-        exit()
+        exit(1)
 
     if col_type == 'string':
+        # string field length is located 2 bytes after field type
         file.seek(offset + 166)
         byte = file.read(1)
+        # Add two bytes for starting \x01 and ending \x00
         col_length = int(binascii.hexlify(byte), 16)+2
 
     return col_type, col_length
 
 
+# Creates a dict containing column name, length and field type
 def get_col(file, offset, next_byte):
     col = {}
 
@@ -58,6 +64,7 @@ def get_col(file, offset, next_byte):
     return col
 
 
+# Creates a list of all columns
 def get_col_names(file):
     # SET values to find first col
     done = False
@@ -78,7 +85,7 @@ def get_col_names(file):
             done = True
             last_offset = offset
 
-        offset += 768  # next col has offset 0x300
+        offset += 768  # next col has offset += 0x300
 
     # print(cols)
     return cols, last_offset
