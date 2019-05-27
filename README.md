@@ -39,6 +39,7 @@ python convert.py <filename> -c outfile.csv
 This will export to a JSON file:
 ```
 python convert.py <filename> -o outfile.json
+```
 
 ## Dependencies
 
